@@ -1,5 +1,7 @@
-from flask import render_template, url_for, flash, redirect
-from yacut import db, app
+from flask import flash, redirect, render_template, url_for
+
+from yacut import app, db
+
 from .forms import URLMapForm
 from .models import URLMap
 from .utils import short_url_generator
@@ -8,10 +10,8 @@ from .utils import short_url_generator
 @app.route('/', methods=['GET', 'POST'])
 def my_index_view():
     form = URLMapForm()
-    # print(f'>>>>>{form.custom_id.data}<>{form.original_linc.data}<<<<<')
     if form.validate_on_submit():
         short = form.custom_id.data or short_url_generator()
-        print(f'>>>>>{type(short)}<>{form.original_linc.data}<<<<<')
         if short == '':
             short = short_url_generator()
         if URLMap.query.filter_by(short=short).first():
