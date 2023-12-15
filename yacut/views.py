@@ -1,4 +1,4 @@
-from flask import flash, redirect, render_template
+from flask import flash, redirect, render_template, url_for
 
 from yacut import app, db
 
@@ -12,9 +12,6 @@ def my_index_view():
     form = URLMapForm()
     if form.validate_on_submit():
         short = form.custom_id.data or short_url_generator()
-        # print(f"<>short=={type(short)}")
-        # if short == '' or short is None:
-        #     short = short_url_generator()
         if URLMap.query.filter_by(short=short).first():
             flash('Предложенный вариант короткой ссылки уже существует.')
             return render_template('yacut.html', form=form)
@@ -27,8 +24,11 @@ def my_index_view():
         return render_template(
             'yacut.html',
             form=form,
-            short_url='http://127.0.0.1:5000/' + url.short,
-            original_link=url.original)
+            short_url=url_for(
+                'redirect_to_url_view',
+                short=short, _external=True
+            )
+        )
 
     return render_template('yacut.html', form=form)
 
