@@ -11,15 +11,16 @@ from .utils import short_url_generator
 @app.route('/api/id/', methods=['POST'])
 def add_urlshort():
     data = request.get_json()
+    print(f"<>data=={data}")
     if not data:
         raise InvalidAPIUsage('Отсутствует тело запроса', 400)
     if 'url' not in data:
         raise InvalidAPIUsage('\"url\" является обязательным полем!', 400)
-    if 'short_link' not in data or data['short_link'] == '':
-        data['short_link'] = short_url_generator()
-    if URLMap.query.filter_by(short=data['short_link']).first() is not None:
+    if 'custom_id' not in data or data['custom_id'] == '':
+        data['custom_id'] = short_url_generator()
+    if URLMap.query.filter_by(short=data['custom_id']).first() is not None:
         raise InvalidAPIUsage('Предложенный вариант короткой ссылки уже существует.', 400)
-    if not match(r'^[A-Za-z0-9]+$', data['short_link']) or len(data['short_link']) > 16:
+    if not match(r'^[A-Za-z0-9]+$', data['custom_id']) or len(data['custom_id']) > 16:
         raise InvalidAPIUsage('Указано недопустимое имя для короткой ссылки', 400)
     urlshort = URLMap()
     urlshort.from_dict(data)
