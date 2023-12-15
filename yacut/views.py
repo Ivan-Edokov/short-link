@@ -15,7 +15,7 @@ def my_index_view():
         if short == '':
             short = short_url_generator()
         if URLMap.query.filter_by(short=short).first():
-            flash('Предложенный вариант короткой ссылки уже существует.')
+            flash("Предложенный вариант короткой ссылки уже существует.")
             return render_template('yacut.html', form=form)
         url = URLMap(
             original=form.original_linc.data,
