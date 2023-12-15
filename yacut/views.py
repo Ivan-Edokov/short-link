@@ -11,11 +11,11 @@ from .utils import short_url_generator
 def my_index_view():
     form = URLMapForm()
     if form.validate_on_submit():
-        short = form.custom_id.data  # or short_url_generator()
+        short = form.custom_id.data or short_url_generator()
         if short == '' or short is None:
             short = short_url_generator()
         if URLMap.query.filter_by(short=short).first():
-            flash(f'Имя {short} уже занято!')
+            flash('Предложенный вариант короткой ссылки уже существует.')
             return render_template('yacut.html', form=form)
         url = URLMap(
             original=form.original_linc.data,
