@@ -27,11 +27,8 @@ def my_index_view():
         return render_template(
             'yacut.html',
             form=form,
-            short_url=url_for(
-                'redirect_to_url_view',
-                short=short, _external=True
-            )
-        )
+            short_url='http://127.0.0.1:5000/' + url.short,
+            original_link=url.original)
 
     return render_template('yacut.html', form=form)
 
