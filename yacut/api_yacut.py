@@ -19,7 +19,8 @@ def add_urlshort():
         raise InvalidAPIUsage('\"url\" является обязательным полем!', 400)
 
     if 'custom_id' not in data or data['custom_id'] == '' or data['custom_id'] is None:
-        data['custom_id'] = short_url_generator()
+        short_id = short_url_generator()
+        data['custom_id'] = short_id
 
     custom_id = data['custom_id']
     if URLMap.query.filter_by(short=data['custom_id']).first() is not None:
