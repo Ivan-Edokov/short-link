@@ -12,7 +12,7 @@ def my_index_view():
     form = URLMapForm()
     if form.validate_on_submit():
         short = form.custom_id.data  # or short_url_generator()
-        if short == '':
+        if short == '' or short is None:
             short = short_url_generator()
         if URLMap.query.filter_by(short=short).first():
             flash(f'Имя {short} уже занято!')

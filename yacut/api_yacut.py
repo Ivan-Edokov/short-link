@@ -37,4 +37,4 @@ def get_urlshort(short_id):
     if not urlshort:
         raise InvalidAPIUsage('Указанный id не найден', 404)
     data = urlshort.to_dict()
-    return jsonify({'url': data['original']}), 200
+    return jsonify({'url': data['url']}), 200
