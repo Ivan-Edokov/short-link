@@ -1,8 +1,8 @@
-"""add URLMap
+"""empty message
 
-Revision ID: 5e0e5191b642
+Revision ID: cc75c36a6e09
 Revises: 
-Create Date: 2023-12-12 18:46:05.630427
+Create Date: 2023-12-15 10:04:47.781119
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '5e0e5191b642'
+revision = 'cc75c36a6e09'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -21,9 +21,10 @@ def upgrade():
     op.create_table('url_map',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('original', sa.Text(), nullable=False),
-    sa.Column('short', sa.String(length=16), nullable=True),
+    sa.Column('short', sa.String(length=16), nullable=False),
     sa.Column('timestamp', sa.DateTime(), nullable=True),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('short')
     )
     op.create_index(op.f('ix_url_map_timestamp'), 'url_map', ['timestamp'], unique=False)
     # ### end Alembic commands ###
