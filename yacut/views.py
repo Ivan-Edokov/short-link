@@ -19,7 +19,7 @@ def my_index_view():
             flash('Предложенный вариант короткой ссылки уже существует.')
             return render_template('yacut.html', form=form)
         url = URLMap(
-            original=form.original_linc.data,
+            original=form.original_link.data,
             short=short,
         )
         db.session.add(url)

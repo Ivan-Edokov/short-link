@@ -4,7 +4,7 @@ from wtforms.validators import URL, DataRequired, Length, Optional, Regexp
 
 
 class URLMapForm(FlaskForm):
-    original_linc = URLField(
+    original_link = URLField(
         'Длинная ссылка',
         validators=[
             URL(require_tld=True, message='Введите корректный Url адрес'),
